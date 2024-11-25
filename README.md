@@ -1,14 +1,25 @@
 ![](UTA-DataScience-Logo.png)
 
-# Springleaf Marketing Response
+# Human Resources/People Analytics 
 
-* This repository applies machine learning techniques and models to springlife marketing response to predict customer responses to the direct mail (DM) that springleaf sends out to connect with their current and potential clientale.
-From Kaggle's "Springleaf Marketing Response" [(https://www.kaggle.com/competitions/springleaf-marketing-response/overview)]. Kaggle provides a high-dimensional dataset that included anonymized customer information/features.
+* This repository leverages a straightforward machine learning model to predict employee termination status while incorporating statistical testing to address key business questions and uncover insights into organizational health.
+The dataset used is Kaggle's "Human Resources Dataset" [(https://www.kaggle.com/datasets/rhuebner/human-resources-data-set)], a rich source of information containing diverse features that can be used to gather meaningful analysis and insight.
 
 ## Overview
 
-* Springleaf is a financial services company that provides customers with personal and auto loans. Direct mail is Springleaf's primary communication source to connect with their current customers and reach out to potential and target customers.
-* The task, as defined by the Kaggle challenge is to develop a model to "determine whether to send a direct mail peice to a customer". This repository approaches this problem as a binary classification task, using model CatBoost. The model was able to determine whether a customer succesfully responded to a DM and hence should be futher contacted via DM scored at ~72% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 80%.
+* People analytics is very important for organizations and shareholders because it provides actionable insights into workforce dynamics, that enable leaders to make data-driven decisions for business success.
+* The Kaggle task involves identifying key performance indicators (KPIs) that can benefit a company while developing a predictive model to determine whether an employee will be terminated. This project explores several critical business questions, including:
+
+- Turnover and Retention: What are the turnover and retention rates? What is the company's overall net growth?
+- Employee Satisfaction and Performance: Is there a relationship between employee satisfaction (engagement) and their performance?
+- Engagement Analysis: How does employee engagement vary by age, gender, and race?
+- Manager Impact: Is there a correlation between who an employee works for and their performance or satisfaction?
+- Diversity: What is the organization's overall diversity profile?
+- Recruiting Sources: Which recruiting sources are most effective for ensuring diversity?
+- Pay Equity: Are there areas where pay is inequitable within the company?
+- Predictive Modeling: Can we predict whether an employee will terminate, and how accurate can the prediction be?
+  
+* This repository approaches the problem as a binary classification task, leveraging the Random Forest model. The model achieved an impressive ~98% accuracy in predicting whether an employee would be terminated.
 
 ## Summary of Work Done
 
@@ -16,27 +27,28 @@ From Kaggle's "Springleaf Marketing Response" [(https://www.kaggle.com/competiti
 
 * Data:
   * Type: Binary Classification
-    * Input: CSV file: train.csv, test.csv; described customer response
-    * Output: success or failure based on whether or not the customer responded or not -> target col = 'target'
-  * Size: Original training and testing datasets together was 1,931 MB (training: 145,231 rows & 1934 features (966 MB); test: 145,232 rows & 1934 features (965 MB). After cleaning and preprocessing, both datasets was about 882 MB.
+    * Input: CSV file: HR_Datasetv14.csv
+    * Output: success or failure based on whether or not the employee will be terminated or not -> target col = 'termid'
+  * Size: 76 KB; 311 rows & 36 features
 
 #### Preprocessing / Clean up
 
-Before proceeding, my machine did not have the memory to compute the entire dataset so I proceeded with a subset/chunk of the data (24,205 rows & 1934 features).
-- Dropped features that had one unique & constant values
-- Dropped features with over 50% NA values
-- Operationalizing NA values
+- Standardize Data Columns
 - Confirming data types were appropriate
-- Dropped outliers
-- Transformed numerical data
-- Encoded categorical data
+- Trim leading spaces
+- Resolve duplicates values
+- Binned categries to reduce number of values
+- Feature engineered columns
+  - Age
+  - Tenure
+  - Diversity fair performance
+  - Salary/department average ratio
+  - Performance score/department perf. average
+  - Days since last performance review
 
 #### Data Visualization
 
-Visualization of some categorical and numerical features that compare the targets.
-![image](https://github.com/user-attachments/assets/a75618c1-a765-40ff-81de-8cdcb6c4b31e)
-
-![image](https://github.com/user-attachments/assets/e41a6421-a645-480f-b419-a9cb631c580f)
+TBD
 
 ### Problem Formulation
 
@@ -51,7 +63,6 @@ Visualization of some categorical and numerical features that compare the target
   * Training was done on a Surface Pro 9 using Python via jupyter notebook.
   * Training did not take long to process, with the longest training time to be approximately a minute.
   * Concluded training when results were satisfactory and plenty of evaluation metrics for comparison observed fairly decent results.
-  * Played around with the hyperparameters such as the learning rate, depth, and early round stopping while also optimizing the number of important features to use.
 
 ### Performance Comparison
 
@@ -61,16 +72,16 @@ Visualization of some categorical and numerical features that compare the target
 
 ### Conclusions
 
-Since only one model was used, there are no comparisons between models to be made. The CatBoost model that was used did not perform up to my standards. To increase accuracy, more hyperparameter tuning may be needed.
+Since only one model was used, there are no comparisons between models to be made. The RandomForest model performed great, and was further utilized as a predictive model to apply a risk score upon employees.
 
 ### Future Work
 
-I would like to mess around more with the preprocessing with this dataset. I would also like to train and compare more models to find a better model, as well as study the learning curves to tune the base model better.
+I want to work on adding a Tableau dashboard along with practicing with unsupervised learning to explore clusters.
 
 ## How to reproduce results
 
 * The notebooks are well organized and include further explanation; a summary is provided below:
-* Download the original data files ('train.csv', 'test.csv') from Kaggle or directly through the current repository along with the processed data files.
+* Download the original data file (HR_Datasetv14) from Kaggle or directly through the current repository.
 * Install the necessary libraries
 * Run the notebooks attached
 * As long as a platform that can provide Python, such as Collab, Anaconda, etc, is used, results can be replicated.
@@ -78,10 +89,12 @@ I would like to mess around more with the preprocessing with this dataset. I wou
 ### Overview of files in repository
 
 * The repository includes 4 files in total.
-  * data_understanding.ipynb:  provides my intitial walkthrough of trying to understand the data such as class distributions, features and missing values.
-  * preprocess_data.ipynb: transforms and encodes the dtypes appropriately.
-  * data_clean.ipynb: explores the data further by dealing with the missing values and duplicates, visualizes the data
-  * model_prediction.ipynb: trains the model, CatBoost on the preprocessed data.
+  * EDA.ipynb:  provides my intitial walkthrough of trying to understand the data such as class distributions, features and missing values. Feature engineered columns to set up for exploration of KPI's.
+  * df_preprocess.ipynb: transforms the dataset appropriately. Diverges into two datasets, one used for modeling in RandomForest, the other for statistical testing.
+  * baseline_model.ipynb: baseline model of RandomForest that was tested on the raw data to be used for comparison for more advanced/tuned models.
+  * model_RandomForest.ipynb: The "advanced" or final model that was used as the predictive model.
+  * analysis.ipynb: notebook that explores business questions in detail. Utilized statistical testing.
+  * HR_Datasetv14: The official dataset from Kaggle (subject to change as the author may update the dataset--this is version 14)
 
 ### Software Setup
 * Required Packages:
@@ -104,16 +117,5 @@ I would like to mess around more with the preprocessing with this dataset. I wou
 
 * Data can be downloaded through the official Kaggle website through the link stated above. Or through Kaggle's API interface. Can also be downloaded directly through the datasets provided in this directory.
 
-### Training
-
-* Models can be trained by first splitting the testing dataset into two datasets to be trained and validated. Choose the model you wish to train and fit the data and validation variables. Look below in citations to research official websites to find parameters of the model functions to tune to your liking.
-
-#### Performance Evaluation
-
-* Evaluation metrics are imported such as the accuracy score and classification score.
-* Run the notebooks.
-
-
 ## Citations
-- Official CatBoost website; used to learn about the CatBoost model and parameters it has to offer: https://catboost.ai/en/docs/concepts/python-reference_catboostclassifier_eval-metrics
 - Official SciKit-Learn website; used to learn about RandomForest and other potential models: https://scikit-learn.org/stable/supervised_learning.html#supervised-learning
