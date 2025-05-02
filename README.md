@@ -117,9 +117,10 @@ The dataset used is Kaggle's "Human Resources Dataset" [(https://www.kaggle.com/
   * **analysis.ipynb:** notebook that explores business questions in detail. Utilized statistical testing and visualizations to deliver actionable insights and reccomendations.
   * **HR_Datasetv14:** The official dataset from Kaggle (subject to change as the author may update the dataset--this is version 14)
 * Includes a docs folders that shows visualizations and documents the project in further detail:
-  * **Report.doc:** a report that explains the project in detail.
-  * **People Analytics.ppt:** a presentation that gives a summary step by step of work done (preprocessing, feature engineering, modeling, dashboard).
+  * **FinalReport_Hyson.docx:** a report that explains the project in detail.
+  * **People Analytics.pptx:** a presentation that gives a summary step by step of work done (preprocessing, feature engineering, modeling, dashboard).
   * **interactive_dashboard.png:**  shows the visualizations of the interactive dashboard created in Tableau.
+  * **risk_distribution.png:**  shows the visualizations of the model providing a risk score to employees.
 
 ### Software Setup
 * Required Packages:
